@@ -162,8 +162,18 @@ It's my hope that I can get the rest of these things wrapped up into Ansible pla
     curl https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim > pathogen.vim
     cd ~/.vim/bundle
     git clone git://github.com/scrooloose/nerdtree.git
+    curl -s "https://get.sdkman.io" | zsh
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" // In case of error add this ZSH_DISABLE_COMPFIX="true"
     ```
-
+## Fixes needed
+- Needed to fix some compinint errors. See (this)[https://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories] for more details.
+  ```
+  sudo chmod -R 755 /usr/local/share/zsh
+  sudo chown -R root:staff /usr/local/share/zsh
+  ```
+- Follow tutorial: [Only steps after install NVM with Brew](https://jamesauble.medium.com/install-nvm-on-mac-with-brew-adb921fb92cc). After that use nvm install --lts to get the latest lts version.
+- Follow tutorial: [Install NativeScript](https://docs.nativescript.org/start/ns-setup-os-x)
+- Follow tutorial: [Install NX](https://nx.dev/latest/angular/getting-started/cli-overview#installing-the-cli)
 ## Testing the Playbook
 
 Many people have asked me if I often wipe my entire workstation and start from scratch just to test changes to the playbook. Nope! Instead, I posted instructions for how I build a [Mac OS X VirtualBox VM](https://github.com/geerlingguy/mac-osx-virtualbox-vm), on which I can continually run and re-run this playbook to test changes and make sure things work correctly.

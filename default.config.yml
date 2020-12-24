@@ -26,9 +26,7 @@ homebrew_installed_packages:
   # - ansible # Installed via Pip.
   - autoconf
   - bash-completion
-  - doxygen
-  - gettext
-  - gifsicle
+  - zsh-history-substring-search
   - git
   - github/gh/gh
   - go
@@ -49,6 +47,7 @@ homebrew_installed_packages:
   - pv
   - wget
   - wrk
+  - angular-cli
 
 homebrew_taps:
   - homebrew/core
@@ -63,11 +62,16 @@ homebrew_cask_apps:
   - google-chrome
   - handbrake
   - licecap
-  - sequel-pro
   - slack
-  - sublime-text
-  - transmit
-  - vagrant
+  - iterm2
+  - visual-studio-code-insiders
+  - github
+  - microsoft-teams
+  - zoom
+  - keka
+  - postman
+  - vlc
+  - android-sdk
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps: []
