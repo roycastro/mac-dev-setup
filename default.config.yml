@@ -5,14 +5,14 @@ configure_dotfiles: true
 configure_terminal: true
 configure_osx: true
 
-configure_sudoers: false
-sudoers_custom_config: ''
+configure_sudoers: true
+# sudoers_custom_config: ''
 # Example:
-# sudoers_custom_config: |
-#   # Allow users in admin group to use sudo with no password.
-#   %admin ALL=(ALL) NOPASSWD: ALL
+sudoers_custom_config: |
+  # Allow users in admin group to use sudo with no password.
+  %admin ALL=(ALL) NOPASSWD: ALL
 
-dotfiles_repo: https://github.com/geerlingguy/dotfiles.git
+dotfiles_repo: https://github.com/roycastro/mac-dev-dotfiles.git
 dotfiles_repo_accept_hostkey: true
 dotfiles_repo_local_destination: ~/Development/GitHub/dotfiles
 dotfiles_files:
