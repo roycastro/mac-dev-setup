@@ -48,7 +48,7 @@ homebrew_installed_packages:
   - wget
   - wrk
   - angular-cli
-
+  
 homebrew_taps:
   - homebrew/core
   - homebrew/cask
@@ -72,9 +72,21 @@ homebrew_cask_apps:
   - postman
   - vlc
   - android-sdk
+  - qbittorrent
+  - tor-browser
+  - macs-fan-control
+  - visual-paradigm
 
 # See `geerlingguy.mas` role documentation for usage instructions.
-mas_installed_apps: []
+mas_installed_apps:
+  - { id: 497799835, name: "Xcode" }
+  - { id: 409203825, name: "Numbers" }
+  - { id: 409201541, name: "Pages" }
+  - { id: 409183694, name: "Keynote" }
+  - { id: 1295203466, name: "Microsoft Remote Desktop" }
+  - { id: 1147396723, name: "WhatsApp Desktop" }
+  - { id: 425264550, name: "Blackmagic Disk Speed Test" }
+  - { id: 882812218, name: "Owly - Prevent Display Sleep" }
 mas_email: ""
 mas_password: ""
 
