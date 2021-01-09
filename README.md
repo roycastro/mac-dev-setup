@@ -1,19 +1,12 @@
-<img src="https://raw.githubusercontent.com/geerlingguy/mac-dev-playbook/master/files/Mac-Dev-Playbook-Logo.png" width="250" height="156" alt="Mac Dev Playbook Logo" />
+<img src="https://raw.githubusercontent.com/roycastro/mac-dev-setup/master/files/Mac-Dev-Playbook-Logo.png" width="250" height="156" alt="Mac Dev Playbook Logo" />
 
 # Mac Development Ansible Playbook
 
 [![CI][badge-gh-actions]][link-gh-actions]
 
-This playbook installs and configures most of the software I use on my Mac for web and software development. Some things in macOS are slightly difficult to automate, so I still have some manual installation steps, but at least it's all documented here.
+This playbook installs and configures most of the software I use on my Mac for web development. Please take into account that some features are not complete an consequently this is a WIP. This work is heavily based on [geerlinguy](https://github.com/geerlingguy)'s awesome tutorials and I recommend you visit this [repository](https://github.com/geerlingguy/mac-dev-playbook)
 
-This is a work in progress, and is mostly a means for me to document my current Mac's setup. I'll be evolving this playbook over time.
-
-*See also*:
-
-  - [Boxen](https://github.com/boxen)
-  - [Battleschool](http://spencer.gibb.us/blog/2014/02/03/introducing-battleschool)
-  - [osxc](https://github.com/osxc)
-  - [MWGriffin/ansible-playbooks](https://github.com/MWGriffin/ansible-playbooks) (the original inspiration for this project)
+> Note: All the testing has been carried out in [macOS Big Sur](https://www.apple.com/macos/big-sur/)
 
 ## Installation
 
@@ -52,8 +45,6 @@ You can filter which part of the provisioning process to run by specifying a set
 
 ## Overriding Defaults
 
-Not everyone's development environment and preferred software configuration is the same.
-
 You can override any of the defaults configured in `default.config.yml` by creating a `config.yml` file and setting the overrides in that file. For example, you can customize the installed packages and apps with something like:
 
     homebrew_installed_packages:
@@ -84,77 +75,14 @@ You can override any of the defaults configured in `default.config.yml` by creat
 
 Any variable can be overridden in `config.yml`; see the supporting roles' documentation for a complete list of available variables.
 
-## Included Applications / Configuration (Default)
+## Included Configuration (Default)
 
-Applications (installed with Homebrew Cask):
 
-  - [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/)
-  - [Docker](https://www.docker.com/)
-  - [Dropbox](https://www.dropbox.com/)
-  - [Firefox](https://www.mozilla.org/en-US/firefox/new/)
-  - [Google Chrome](https://www.google.com/chrome/)
-  - [Handbrake](https://handbrake.fr/)
-  - [Homebrew](http://brew.sh/)
-  - [LICEcap](http://www.cockos.com/licecap/)
-  - [LimeChat](http://limechat.net/mac/)
-  - [MacVim](http://macvim-dev.github.io/macvim/)
-  - [nvALT](http://brettterpstra.com/projects/nvalt/)
-  - [Sequel Pro](https://www.sequelpro.com/) (MySQL client)
-  - [Skitch](https://evernote.com/skitch/)
-  - [Slack](https://slack.com/)
-  - [Sublime Text](https://www.sublimetext.com/)
-  - [Transmit](https://panic.com/transmit/) (S/FTP client)
-  - [Vagrant](https://www.vagrantup.com/)
-
-Packages (installed with Homebrew):
-
-  - autoconf
-  - bash-completion
-  - doxygen
-  - gettext
-  - gifsicle
-  - git
-  - go
-  - gpg
-  - hub
-  - httpie
-  - iperf
-  - libevent
-  - sqlite
-  - mcrypt
-  - nmap
-  - node
-  - nvm
-  - php
-  - ssh-copy-id
-  - cowsay
-  - readline
-  - openssl
-  - pv
-  - wget
-  - wrk
-
-My [dotfiles](https://github.com/geerlingguy/dotfiles) are also installed into the current user's home directory, including the `.osx` dotfile for configuring many aspects of macOS for better performance and ease of use. You can disable dotfiles management by setting `configure_dotfiles: no` in your configuration.
-
-Finally, there are a few other preferences and settings added on for various apps and services.
-
-## Future additions
-
-### Things that still need to be done manually
-
-It's my hope that I can get the rest of these things wrapped up into Ansible playbooks soon, but for now, these steps need to be completed manually (assuming you already have Xcode and Ansible installed, and have run this playbook).
-
-  1. Set JJG-Term as the default Terminal theme (it's installed, but not set as default automatically).
-  2. Install [Sublime Package Manager](http://sublime.wbond.net/installation).
-  3. Install all the apps that aren't yet in this setup (see below).
-  4. Remap Caps Lock to Escape (requires macOS Sierra 10.12.1+).
-  5. Set trackpad tracking rate.
-  6. Set mouse tracking rate.
-  7. Configure extra Mail and/or Calendar accounts (e.g. Google, Exchange, etc.).
+Also as part of the playbook my [dotfiles](https://github.com/roycastro/mac-dev-dotfiles) are also installed into the current user's home directory, including the `.osx` dotfile for configuring many aspects of macOS for better performance and ease of use ( hopefully ). You can disable dotfiles management by setting `configure_dotfiles: no` in your configuration.
 
 ### Configuration to be added:
 
-  - I have vim configuration in the repo, but I still need to add the actual installation:
+  - There is a vim configuration in the repo, but it´s still pending the actual installation:
     ```
     mkdir -p ~/.vim/autoload
     mkdir -p ~/.vim/bundle
@@ -165,7 +93,7 @@ It's my hope that I can get the rest of these things wrapped up into Ansible pla
     curl -s "https://get.sdkman.io" | zsh
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" // In case of error add this ZSH_DISABLE_COMPFIX="true"
     ```
-## Fixes needed
+## Fixes needed or commom errors
 - Needed to fix some compinint errors. See (this)[https://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories] for more details.
   ```
   sudo chmod -R 755 /usr/local/share/zsh
@@ -174,19 +102,3 @@ It's my hope that I can get the rest of these things wrapped up into Ansible pla
 - Follow tutorial: [Only steps after install NVM with Brew](https://jamesauble.medium.com/install-nvm-on-mac-with-brew-adb921fb92cc). After that use nvm install --lts to get the latest lts version.
 - Follow tutorial: [Install NativeScript](https://docs.nativescript.org/start/ns-setup-os-x)
 - Follow tutorial: [Install NX](https://nx.dev/latest/angular/getting-started/cli-overview#installing-the-cli)
-## Testing the Playbook
-
-Many people have asked me if I often wipe my entire workstation and start from scratch just to test changes to the playbook. Nope! Instead, I posted instructions for how I build a [Mac OS X VirtualBox VM](https://github.com/geerlingguy/mac-osx-virtualbox-vm), on which I can continually run and re-run this playbook to test changes and make sure things work correctly.
-
-Additionally, this project is [continuously tested on GitHub Actions' macOS infrastructure](https://github.com/geerlingguy/mac-dev-playbook/actions?query=workflow%3ACI).
-
-## Ansible for DevOps
-
-Check out [Ansible for DevOps](https://www.ansiblefordevops.com/), which teaches you how to automate almost anything with Ansible.
-
-## Author
-
-[Jeff Geerling](https://www.jeffgeerling.com/), 2014 (originally inspired by [MWGriffin/ansible-playbooks](https://github.com/MWGriffin/ansible-playbooks)).
-
-[badge-gh-actions]: https://github.com/geerlingguy/mac-dev-playbook/workflows/CI/badge.svg?event=push
-[link-gh-actions]: https://github.com/geerlingguy/mac-dev-playbook/actions?query=workflow%3ACI
