@@ -48,6 +48,7 @@ homebrew_installed_packages:
   - wget
   - wrk
   - angular-cli
+  - terraform
   
 homebrew_taps:
   - homebrew/core
@@ -55,6 +56,7 @@ homebrew_taps:
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
+  - google-cloud-sdk
   - chromedriver
   - docker
   - dropbox
