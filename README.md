@@ -102,3 +102,4 @@ Also as part of the playbook my [dotfiles](https://github.com/roycastro/mac-dev-
 - Follow tutorial: [Only steps after install NVM with Brew](https://jamesauble.medium.com/install-nvm-on-mac-with-brew-adb921fb92cc). After that use nvm install --lts to get the latest lts version.
 - Follow tutorial: [Install NativeScript](https://docs.nativescript.org/start/ns-setup-os-x)
 - Follow tutorial: [Install NX](https://nx.dev/latest/angular/getting-started/cli-overview#installing-the-cli)
+- Folow the instructions at [this](https://formulae.brew.sh/cask/google-cloud-sdk) in order to get gcloud available on the terminal
