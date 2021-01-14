@@ -49,6 +49,7 @@ homebrew_installed_packages:
   - wrk
   - angular-cli
   - terraform
+  - firebase-cli
   
 homebrew_taps:
   - homebrew/core
@@ -78,6 +79,7 @@ homebrew_cask_apps:
   - tor-browser
   - macs-fan-control
   - visual-paradigm
+  - google-backup-and-sync
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps:
