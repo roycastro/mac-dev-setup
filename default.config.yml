@@ -50,7 +50,7 @@ homebrew_installed_packages:
   - angular-cli
   - terraform
   - firebase-cli
-  
+
 homebrew_taps:
   - homebrew/core
   - homebrew/cask
@@ -80,6 +80,7 @@ homebrew_cask_apps:
   - macs-fan-control
   - visual-paradigm
   - google-backup-and-sync
+  - telegram
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps:
