@@ -83,6 +83,9 @@ homebrew_cask_apps:
   - google-backup-and-sync
   - telegram
   - viscosity
+  - flutter
+  - licecap
+  - kodi
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps:
