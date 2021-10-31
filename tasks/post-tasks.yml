@@ -1,0 +1,41 @@
+---
+- name: Clone repository with fonts that will be used by default ZSH theme
+  git:
+    repo: https://github.com/powerline/fonts.git
+    dest: ~/.dotfiles/resources/powerline
+    clone: yes
+    update: yes
+  tags:
+    - "post"
+- name: Install Powerline fonts
+  command: sh ~/.dotfiles/resources/powerline/install.sh
+  tags:
+    - "post"
+- name: Clone repository with fonts that will be used by default in VSCode to support agnoster ZSH theme
+  git:
+    repo: https://github.com/abertsch/Menlo-for-Powerline.git
+    dest: ~/.dotfiles/resources/powerline-vscode
+    clone: yes
+    update: yes
+  tags:
+    - "post"
+- name: Install Menlo for Powerline fonts
+  shell: 'cp ~/.dotfiles/resources/powerline-vscode/Menlo* ~/Library/Fonts'
+  tags:
+    - "post"
+- name: Install latest Java 11 and create generic Major version folder
+  shell: source "$HOME/.sdkman/bin/sdkman-init.sh" && export JAVA_VERSION=11.0; export JAVA_INSTALL_VERSION=$(sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-tem" | head -1); sdk install java $JAVA_INSTALL_VERSION >/dev/null 2>&1 || true; ln -sf ~/.sdkman/candidates/java/$JAVA_INSTALL_VERSION ~/.sdkman/candidates/java/$JAVA_VERSION;
+  tags:
+    - "post"
+- name: Install latest Java 8 and create generic Major version folder
+  shell: source "$HOME/.sdkman/bin/sdkman-init.sh" && export JAVA_VERSION=8.0; export JAVA_INSTALL_VERSION=$(sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-tem" | head -1); sdk install java $JAVA_INSTALL_VERSION >/dev/null 2>&1  || true; ln -sf ~/.sdkman/candidates/java/$JAVA_INSTALL_VERSION ~/.sdkman/candidates/java/$JAVA_VERSION;
+  tags:
+    - "post"
+- name: Use generic Java 11 Major version
+  shell: source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk default java 11.0
+  tags:
+    - "post"
+- name: Install and use the Node version according to the previously configure dotfile(.nvmrc)
+  command: "{{ansible_user_shell}} -l -c '. $HOME/.zshrc && nvm install && nvm use'"
+  tags:
+    - "post"

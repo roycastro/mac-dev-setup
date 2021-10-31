@@ -5,6 +5,29 @@ configure_dotfiles: true
 configure_terminal: true
 configure_osx: true
 
+# Set to 'true' to configure the Dock via dockutil.
+configure_dock: true
+dockitems_remove:
+  - Podcasts
+  - TV
+  - Maps
+  - Photos
+  - Safari
+  - Mail
+  - FaceTime
+  - Calendar
+  - Contacts
+  - Reminders
+  - Notes
+  - Music
+  - Keynote
+  - Numbers
+  - Pages
+dockitems_persist:
+  - name: "Visual Studio Code - Insiders"
+    path: "/Applications/Visual Studio Code - Insiders.app/"
+    pos: 1
+
 configure_sudoers: true
 # sudoers_custom_config: ''
 # Example:
@@ -14,13 +37,14 @@ sudoers_custom_config: |
 
 dotfiles_repo: https://github.com/roycastro/mac-dev-dotfiles.git
 dotfiles_repo_accept_hostkey: true
-dotfiles_repo_local_destination: ~/Development/GitHub/dotfiles
+dotfiles_repo_local_destination: ~/.dotfiles/configs
 dotfiles_files:
   - .zshrc
   - .gitignore
   - .inputrc
   - .osx
   - .vimrc
+  - .nvmrc
 
 homebrew_installed_packages:
   # - ansible # Installed via Pip.
@@ -46,7 +70,6 @@ homebrew_installed_packages:
   - openssl
   - pv
   - wget
-  - wrk
   - angular-cli
   - terraform
   - firebase-cli
@@ -55,11 +78,14 @@ homebrew_installed_packages:
   - instantclient-sqlplus
   - ansible-lint
   - coreutils
+  - jq
 
 homebrew_taps:
   - homebrew/core
   - homebrew/cask
+  - homebrew/cask-versions
   - InstantClientTap/instantclient
+  - homebrew/cask-fonts
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
@@ -73,7 +99,6 @@ homebrew_cask_apps:
   - licecap
   - slack
   - iterm2
-  - visual-studio-code-insiders
   - github
   - microsoft-teams
   - zoom
@@ -85,13 +110,21 @@ homebrew_cask_apps:
   - tor-browser
   - macs-fan-control
   - visual-paradigm
-  - google-backup-and-sync
+  - visual-studio-code-insiders
+  - google-drive
   - telegram
   - viscosity
   - flutter
   - licecap
   - kodi
   - obs
+  - font-fira-code
+  - lens
+  - dbeaver-community
+  - royal-tsx
+  - yandex-cloud-cli
+  - rectangle
+  - tunnelblick
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps:
@@ -129,4 +162,4 @@ pip_packages: []
 #   version: "0.16.3" # default: N/A
 
 # Glob pattern to ansible task files to run after all other tasks are finished.
-post_provision_tasks: []
+post_provision_tasks: [ "tasks/post-tasks.yml"]
