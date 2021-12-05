@@ -80,6 +80,7 @@ homebrew_installed_packages:
   - wget
   - zsh-history-substring-search
   - mtr
+  - pyenv
 
 homebrew_taps:
   - homebrew/core
@@ -132,14 +133,14 @@ homebrew_cask_apps:
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps:
-  - { id: 1147396723, name: "WhatsApp Desktop" }
-  - { id: 1295203466, name: "Microsoft Remote Desktop" }
-  - { id: 409183694, name: "Keynote" }
-  - { id: 409201541, name: "Pages" }
-  - { id: 409203825, name: "Numbers" }
-  - { id: 425264550, name: "Blackmagic Disk Speed Test" }
-  - { id: 497799835, name: "Xcode" }
-  - { id: 882812218, name: "Owly - Prevent Display Sleep" }
+  - {id: 1147396723, name: "WhatsApp Desktop"}
+  - {id: 1295203466, name: "Microsoft Remote Desktop"}
+  - {id: 409183694, name: "Keynote"}
+  - {id: 409201541, name: "Pages"}
+  - {id: 409203825, name: "Numbers"}
+  - {id: 425264550, name: "Blackmagic Disk Speed Test"}
+  - {id: 497799835, name: "Xcode"}
+  - {id: 882812218, name: "Owly - Prevent Display Sleep"}
 mas_email: ""
 mas_password: ""
 
@@ -160,10 +161,10 @@ npm_packages: []
 # - name: webpack
 #   state: present # present/absent/latest, default: present
 #   version: "^2.6" # default: N/A
-pip_packages: []
+pip_packages: ["ansible-lint[yamllint]"]
 # - name: mkdocs
 #   state: present # present/absent/latest, default: present
 #   version: "0.16.3" # default: N/A
 
 # Glob pattern to ansible task files to run after all other tasks are finished.
-post_provision_tasks: [ "tasks/post-tasks.yml"]
+post_provision_tasks: ["tasks/post-tasks.yml"]
