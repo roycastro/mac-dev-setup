@@ -66,7 +66,7 @@ jobs:
         run: ansible-playbook main.yml --syntax-check
 
       - name: Test the playbook.
-        run: ansible-playbook main.yml
+        run: ansible-playbook main.yml --tags "homebrew,dotfiles,dock,sudoers,osx,extra-packages,post"
         env:
           ANSIBLE_FORCE_COLOR: '1'
 
