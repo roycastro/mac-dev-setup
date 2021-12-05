@@ -11,10 +11,11 @@ This playbook installs and configures most of the software I use on my Mac for w
 ## Installation
 
   1. Ensure Apple's command line tools are installed (`xcode-select --install` to launch the installer).
-  2. [Install Ansible](http://docs.ansible.com/intro_installation.html).
-  3. Clone this repository to your local drive.
-  4. Run `$ ansible-galaxy install -r requirements.yml` inside this directory to install required Ansible roles.
-  5. Run `ansible-playbook main.yml -i inventory --ask-become-pass` inside this directory. Enter your account password when prompted.
+  2. [Install Oh My Zsh](https://ohmyz.sh/)
+  3. [Install Ansible](http://docs.ansible.com/intro_installation.html).
+  4. Clone this repository to your local drive.
+  5. Run `$ ansible-galaxy install -r requirements.yml` inside this directory to install required Ansible roles.
+  6. Run `ansible-playbook main.yml -i inventory --ask-become-pass` inside this directory. Enter your account password when prompted.
 
 > Note: If some Homebrew commands fail, you might need to agree to Xcode's license or fix some other Brew issue. Run `brew doctor` to see if this is the case.
 
@@ -82,7 +83,7 @@ Also as part of the playbook my [dotfiles](https://github.com/roycastro/mac-dev-
 
 ### Configuration to be added:
 
-  - There is a vim configuration in the repo, but it´s still pending the actual installation:
+  - There is a vim configuration in the repo, but it's still pending the actual installation:
     ```
     mkdir -p ~/.vim/autoload
     mkdir -p ~/.vim/bundle
@@ -94,11 +95,13 @@ Also as part of the playbook my [dotfiles](https://github.com/roycastro/mac-dev-
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" // In case of error add this ZSH_DISABLE_COMPFIX="true"
     ```
 ## Fixes needed or commom errors
+- In VSCode you should start using the font "Menlo For Powerline" in your terminal to prevent issues with Oh My Zsh theme
 - Needed to fix some compinint errors. See (this)[https://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories] for more details.
   ```
   sudo chmod -R 755 /usr/local/share/zsh
   sudo chown -R root:staff /usr/local/share/zsh
   ```
+- See the following regarding how to configure right fonts for iTerm [How to Configure your macOs Terminal with Zsh like a Pro](https://www.freecodecamp.org/news/how-to-configure-your-macos-terminal-with-zsh-like-a-pro-c0ab3f3c1156/)
 - Follow tutorial: [Only steps after install NVM with Brew](https://jamesauble.medium.com/install-nvm-on-mac-with-brew-adb921fb92cc). After that use nvm install --lts to get the latest lts version.
 - Follow tutorial: [Install NativeScript](https://docs.nativescript.org/start/ns-setup-os-x)
 - Follow tutorial: [Install NX](https://nx.dev/latest/angular/getting-started/cli-overview#installing-the-cli)
