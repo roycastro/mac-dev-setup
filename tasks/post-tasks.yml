@@ -1,4 +1,11 @@
 ---
+- name: Executed to avoid issues with zsh compinit insecure directories warnings when attempting to load ZSH completions
+  ansible.builtin.file:
+    path: /opt/homebrew/share/zsh
+    recurse: yes
+    mode: go-w
+  tags:
+    - "post"
 - name: Clone repository with fonts that will be used by default ZSH theme
   git:
     repo: https://github.com/powerline/fonts.git

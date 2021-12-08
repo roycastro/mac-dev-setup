@@ -52,6 +52,7 @@ homebrew_installed_packages:
   - ansible-lint
   - autoconf
   - bash-completion
+  - zsh-completions
   - coreutils
   - cowsay
   - firebase-cli
@@ -130,6 +131,7 @@ homebrew_cask_apps:
   - vlc
   - yandex-cloud-cli
   - zoom
+  - parallels
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps:
