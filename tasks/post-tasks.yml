@@ -1,9 +1,21 @@
 ---
+- name: Set Desktop Background Image
+  command: m wallpaper ~/.dotfiles/configs/backgroudImage.jpeg
+  tags:
+    - "post"
 - name: Executed to avoid issues with zsh compinit insecure directories warnings when attempting to load ZSH completions
   ansible.builtin.file:
     path: /opt/homebrew/share/zsh
     recurse: yes
     mode: go-w
+  tags:
+    - "post"
+- name: Clone repository with app-bar
+  git:
+    repo: https://github.com/Jean-Tinland/simple-bar.git
+    dest: ~/Library/Application\ Support/Übersicht/widgets/simple-bar
+    clone: yes
+    update: yes
   tags:
     - "post"
 - name: Clone repository with fonts that will be used by default ZSH theme
