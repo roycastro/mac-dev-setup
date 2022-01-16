@@ -45,6 +45,9 @@ dotfiles_files:
   - .osx
   - .vimrc
   - .zshrc
+  - .yabairc
+  - .skhdrc
+  - .simplebarrc
 
 homebrew_installed_packages:
   # - ansible # Installed via Pip.
@@ -82,6 +85,9 @@ homebrew_installed_packages:
   - zsh-history-substring-search
   - mtr
   - pyenv
+  - yabai
+  - skhd
+  - m-cli
 
 homebrew_taps:
   - homebrew/core
@@ -89,6 +95,7 @@ homebrew_taps:
   - homebrew/cask-versions
   - InstantClientTap/instantclient
   - homebrew/cask-fonts
+  - koekeishiya/formulae
 
 homebrew_cask_appdir: /Applications
 homebrew_cask_apps:
@@ -113,13 +120,11 @@ homebrew_cask_apps:
   - kodi
   - lens
   - licecap
-  - licecap
   - macs-fan-control
   - microsoft-teams
   - obs
   - postman
   - qbittorrent
-  - rectangle
   - royal-tsx
   - slack
   - telegram
@@ -132,6 +137,7 @@ homebrew_cask_apps:
   - yandex-cloud-cli
   - zoom
   - parallels
+  - ubersicht
 
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps:
