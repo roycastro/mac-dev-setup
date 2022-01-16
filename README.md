@@ -78,29 +78,31 @@ Any variable can be overridden in `config.yml`; see the supporting roles' docume
 
 ## Included Configuration (Default)
 
-
 Also as part of the playbook my [dotfiles](https://github.com/roycastro/mac-dev-dotfiles) are also installed into the current user's home directory, including the `.osx` dotfile for configuring many aspects of macOS for better performance and ease of use ( hopefully ). You can disable dotfiles management by setting `configure_dotfiles: no` in your configuration.
 
-### Configuration to be added:
+### Configuration to be added
 
-  - There is a vim configuration in the repo, but it's still pending the actual installation:
-    ```
-    mkdir -p ~/.vim/autoload
-    mkdir -p ~/.vim/bundle
-    cd ~/.vim/autoload
-    curl https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim > pathogen.vim
-    cd ~/.vim/bundle
-    git clone git://github.com/scrooloose/nerdtree.git
-    curl -s "https://get.sdkman.io" | zsh
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" // In case of error add this ZSH_DISABLE_COMPFIX="true"
-    ```
+- There is a vim configuration in the repo, but it's still pending the actual installation:
+
+        mkdir -p ~/.vim/autoload
+        mkdir -p ~/.vim/bundle
+        cd ~/.vim/autoload
+        curl https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim > pathogen.vim
+        cd ~/.vim/bundle
+        git clone git://github.com/scrooloose/nerdtree.git
+        curl -s "https://get.sdkman.io" | zsh
+        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" // In case of error add this ZSH_DISABLE_COMPFIX="true"
+
 ## Fixes needed or commom errors
+
+- Follow the next [steps for Yabai](https://github.com/koekeishiya/yabai/wiki/Installing-yabai-%28from-HEAD%29). Remember you have to disable SIP protection.
+- Check [SIP disable instructions](https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection)
 - In VSCode you should start using the font "Menlo For Powerline" in your terminal to prevent issues with Oh My Zsh theme
-- Needed to fix some compinint errors. See (this)[https://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories] for more details.
-  ```
-  sudo chmod -R 755 /usr/local/share/zsh
-  sudo chown -R root:staff /usr/local/share/zsh
-  ```
+- Needed to fix some compinint errors. See [this](https://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories) for more details.
+
+          sudo chmod -R 755 /usr/local/share/zsh
+          sudo chown -R root:staff /usr/local/share/zsh
+
 - See the following regarding how to configure right fonts for iTerm [How to Configure your macOs Terminal with Zsh like a Pro](https://www.freecodecamp.org/news/how-to-configure-your-macos-terminal-with-zsh-like-a-pro-c0ab3f3c1156/)
 - Follow tutorial: [Only steps after install NVM with Brew](https://jamesauble.medium.com/install-nvm-on-mac-with-brew-adb921fb92cc). After that use nvm install --lts to get the latest lts version.
 - Follow tutorial: [Install NativeScript](https://docs.nativescript.org/start/ns-setup-os-x)
