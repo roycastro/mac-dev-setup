@@ -90,6 +90,8 @@ homebrew_installed_packages:
   - m-cli
   - archey
   - tmux
+  - httpstat
+
 homebrew_taps:
   - homebrew/core
   - homebrew/cask
