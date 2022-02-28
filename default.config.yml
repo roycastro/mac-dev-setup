@@ -91,6 +91,7 @@ homebrew_installed_packages:
   - archey
   - tmux
   - httpstat
+  - pre-commit
 
 homebrew_taps:
   - homebrew/core
