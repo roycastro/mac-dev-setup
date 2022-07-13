@@ -92,6 +92,7 @@ homebrew_installed_packages:
   - tmux
   - httpstat
   - pre-commit
+  - rlwrap
 
 homebrew_taps:
   - homebrew/core
