@@ -1,6 +1,7 @@
 {
-    "conventionalCommits.scopes": [
-      "ansible",
-      "apps"
-    ]
+  "conventionalCommits.scopes": [
+    "ansible",
+    "apps",
+    "configs"
+  ]
 }
