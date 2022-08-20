@@ -5,6 +5,10 @@ rules:
   line-length:
     max: 180
     level: warning
+  braces:
+    max-spaces-inside: 1
+    level: warning
 
 ignore: |
   .github/stale.yml
+  roles/**
