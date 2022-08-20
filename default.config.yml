@@ -49,6 +49,7 @@ dotfiles_files:
   - .skhdrc
   - .simplebarrc
   - .tmux.conf
+  - .p10k.zsh
 
 homebrew_installed_packages:
   # - ansible # Installed via Pip.
