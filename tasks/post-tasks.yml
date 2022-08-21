@@ -38,6 +38,14 @@
     update: true
   tags:
     - "post"
+- name: Clone repository with tmux's TPM (Tmux Plugin Manager)
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
+    clone: true
+    update: true
+  tags:
+    - "post"
 - name: Install Menlo for Powerline fonts
   ansible.builtin.shell: "cp ~/.dotfiles/resources/powerline-vscode/Menlo* ~/Library/Fonts"
   tags:
