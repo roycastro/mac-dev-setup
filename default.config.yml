@@ -178,7 +178,7 @@ npm_packages: []
 # - name: webpack
 #   state: present # present/absent/latest, default: present
 #   version: "^2.6" # default: N/A
-pip_packages: ["ansible-lint[yamllint]"]
+pip_packages: ["yamllint", "ansible-lint"]
 # - name: mkdocs
 #   state: present # present/absent/latest, default: present
 #   version: "0.16.3" # default: N/A

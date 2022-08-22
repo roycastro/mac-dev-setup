@@ -1,11 +1,12 @@
 ---
 - name: "Set default value for dotfiles_repo_local_destination"
-  set_fact:
+  ansible.builtin.set_fact:
     background_image_path: "~/.dotfiles/configs/backgroundImage.jpeg"
   tags:
     - "post"
 - name: Get current Wallpaper
   ansible.builtin.shell: |
+    set -o pipefail && \
     osascript -e 'tell app "finder" to get posix path of (get desktop picture as alias)' |
     grep {{ background_image_path }} |
     wc -l
@@ -14,7 +15,7 @@
   tags:
     - "post"
 - name: Set Desktop Background Image
-  command: m wallpaper "{{ background_image_path }}"
+  ansible.builtin.command: m wallpaper "{{ background_image_path }}"
   when: current_wallpaper.stdout == "0"
   tags:
     - "post"
@@ -26,50 +27,48 @@
   tags:
     - "post"
 - name: Clone repository with app-bar
-  git:
+  ansible.builtin.git:
     repo: https://github.com/Jean-Tinland/simple-bar.git
     dest: ~/Library/Application\ Support/Übersicht/widgets/simple-bar
     clone: true
     update: true
+    version: master
   tags:
     - "post"
 - name: Clone repository with fonts that will be used by default ZSH theme
-  git:
+  ansible.builtin.git:
     repo: https://github.com/powerline/fonts.git
     dest: ~/.dotfiles/resources/powerline
     clone: true
     update: true
-  register: powerline_fonts
+    version: master
   tags:
     - "post"
-- name: Install Powerline fonts
-  command: sh ~/.dotfiles/resources/powerline/install.sh
-  when: powerline_fonts.changed
-  tags:
-    - "post"
+  notify:
+    - Install Fonts ZSH theme
 - name: Clone repository with fonts that will be used by default in VSCode to support agnoster ZSH theme
-  git:
+  ansible.builtin.git:
     repo: https://github.com/abertsch/Menlo-for-Powerline.git
     dest: ~/.dotfiles/resources/powerline-vscode
     clone: true
     update: true
+    version: master
   tags:
     - "post"
+  notify:
+    - Install Fonts VSCode
 - name: Clone repository with tmux's TPM (Tmux Plugin Manager)
-  git:
+  ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tpm
     dest: ~/.tmux/plugins/tpm
     clone: true
     update: true
-  tags:
-    - "post"
-- name: Install Menlo for Powerline fonts
-  ansible.builtin.shell: "cp ~/.dotfiles/resources/powerline-vscode/Menlo* ~/Library/Fonts"
-  when: powerline_fonts.changed
+    version: master
   tags:
     - "post"
 - name: Install latest Java 11 and create generic Major version folder
   ansible.builtin.shell: >
+    set -o pipefail && \
     export JAVA_VERSION=11.0;
     [[ -d ~/.sdkman/candidates/java/$JAVA_VERSION ]] && echo "present" && exit 0;
     source "$HOME/.sdkman/bin/sdkman-init.sh";
@@ -85,7 +84,7 @@
     export JAVA_VERSION=8.0;
     [[ -d ~/.sdkman/candidates/java/$JAVA_VERSION ]] && echo "present" && exit 0;
     source "$HOME/.sdkman/bin/sdkman-init.sh";
-    export JAVA_INSTALL_VERSION=$(sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-tem" | head -1); sdk install java $JAVA_INSTALL_VERSION >/dev/null 2>&1  || true;
+    set -o pipefail && export JAVA_INSTALL_VERSION=$(sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-tem" | head -1); sdk install java $JAVA_INSTALL_VERSION >/dev/null 2>&1  || true;
     ln -sf ~/.sdkman/candidates/java/$JAVA_INSTALL_VERSION ~/.sdkman/candidates/java/$JAVA_VERSION;
   register: java8_installation
   changed_when: java8_installation.stdout | trim != "present"
@@ -94,7 +93,7 @@
 - name: Use generic Java 11 Major version
   ansible.builtin.shell: >
     JAVA_VERSION=11;
-    [[ $( source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk current java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*") == "${JAVA_VERSION}."* ]] && echo "present" && exit 0;
+    set -o pipefail && [[ $( source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk current java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*") == "${JAVA_VERSION}."* ]] && echo "present" && exit 0;
     source "$HOME/.sdkman/bin/sdkman-init.sh";
     sdk default java 11.0
   register: set_default_java
@@ -102,7 +101,7 @@
   tags:
     - "post"
 - name: Install and use the Node version according to the previously configure dotfile(.nvmrc)
-  command: "{{ansible_user_shell}} -l -c '. $HOME/.zshrc && nvm install && nvm use'"
+  ansible.builtin.command: "{{ ansible_user_shell }} -l -c '. $HOME/.zshrc && nvm install && nvm use'"
   register: set_default_node
   changed_when: set_default_node.rc != 0
   tags:
