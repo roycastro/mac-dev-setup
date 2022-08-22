@@ -1,6 +1,21 @@
 ---
+- name: "Set default value for dotfiles_repo_local_destination"
+  set_fact:
+    background_image_path: "~/.dotfiles/configs/backgroundImage.jpeg"
+  tags:
+    - "post"
+- name: Get current Wallpaper
+  ansible.builtin.shell: |
+    osascript -e 'tell app "finder" to get posix path of (get desktop picture as alias)' |
+    grep {{ background_image_path }} |
+    wc -l
+  register: current_wallpaper
+  changed_when: current_wallpaper.stdout | trim != "1"
+  tags:
+    - "post"
 - name: Set Desktop Background Image
-  command: m wallpaper ~/.dotfiles/configs/backgroudImage.jpeg
+  command: m wallpaper "{{ background_image_path }}"
+  when: current_wallpaper.stdout == "0"
   tags:
     - "post"
 - name: Executed to avoid issues with zsh compinit insecure directories warnings when attempting to load ZSH completions
@@ -24,10 +39,12 @@
     dest: ~/.dotfiles/resources/powerline
     clone: true
     update: true
+  register: powerline_fonts
   tags:
     - "post"
 - name: Install Powerline fonts
   command: sh ~/.dotfiles/resources/powerline/install.sh
+  when: powerline_fonts.changed
   tags:
     - "post"
 - name: Clone repository with fonts that will be used by default in VSCode to support agnoster ZSH theme
@@ -48,28 +65,45 @@
     - "post"
 - name: Install Menlo for Powerline fonts
   ansible.builtin.shell: "cp ~/.dotfiles/resources/powerline-vscode/Menlo* ~/Library/Fonts"
+  when: powerline_fonts.changed
   tags:
     - "post"
 - name: Install latest Java 11 and create generic Major version folder
   ansible.builtin.shell: >
-    source "$HOME/.sdkman/bin/sdkman-init.sh" && export JAVA_VERSION=11.0;
+    export JAVA_VERSION=11.0;
+    [[ -d ~/.sdkman/candidates/java/$JAVA_VERSION ]] && echo "present" && exit 0;
+    source "$HOME/.sdkman/bin/sdkman-init.sh";
     export JAVA_INSTALL_VERSION=$(sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-tem" | head -1);
     sdk install java $JAVA_INSTALL_VERSION >/dev/null 2>&1 || true;
     ln -sf ~/.sdkman/candidates/java/$JAVA_INSTALL_VERSION ~/.sdkman/candidates/java/$JAVA_VERSION;
+  register: java11_installation
+  changed_when: java11_installation.stdout | trim != "present"
   tags:
     - "post"
 - name: Install latest Java 8 and create generic Major version folder
   ansible.builtin.shell: >
-    source "$HOME/.sdkman/bin/sdkman-init.sh" && export JAVA_VERSION=8.0;
+    export JAVA_VERSION=8.0;
+    [[ -d ~/.sdkman/candidates/java/$JAVA_VERSION ]] && echo "present" && exit 0;
+    source "$HOME/.sdkman/bin/sdkman-init.sh";
     export JAVA_INSTALL_VERSION=$(sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-tem" | head -1); sdk install java $JAVA_INSTALL_VERSION >/dev/null 2>&1  || true;
     ln -sf ~/.sdkman/candidates/java/$JAVA_INSTALL_VERSION ~/.sdkman/candidates/java/$JAVA_VERSION;
+  register: java8_installation
+  changed_when: java8_installation.stdout | trim != "present"
   tags:
     - "post"
 - name: Use generic Java 11 Major version
-  ansible.builtin.shell: source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk default java 11.0
+  ansible.builtin.shell: >
+    JAVA_VERSION=11;
+    [[ $( source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk current java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*") == "${JAVA_VERSION}."* ]] && echo "present" && exit 0;
+    source "$HOME/.sdkman/bin/sdkman-init.sh";
+    sdk default java 11.0
+  register: set_default_java
+  changed_when: set_default_java.stdout | trim != "present"
   tags:
     - "post"
 - name: Install and use the Node version according to the previously configure dotfile(.nvmrc)
   command: "{{ansible_user_shell}} -l -c '. $HOME/.zshrc && nvm install && nvm use'"
+  register: set_default_node
+  changed_when: set_default_node.rc != 0
   tags:
     - "post"
