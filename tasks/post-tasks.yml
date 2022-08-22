@@ -82,9 +82,10 @@
 - name: Install latest Java 8 and create generic Major version folder
   ansible.builtin.shell: >
     export JAVA_VERSION=8.0;
-    [[ -d ~/.sdkman/candidates/java/$JAVA_VERSION ]] && echo "present" && exit 0;
+    set -o pipefail && [[ -d ~/.sdkman/candidates/java/$JAVA_VERSION ]] && echo "present" && exit 0;
     source "$HOME/.sdkman/bin/sdkman-init.sh";
-    set -o pipefail && export JAVA_INSTALL_VERSION=$(sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-tem" | head -1); sdk install java $JAVA_INSTALL_VERSION >/dev/null 2>&1  || true;
+    set -o pipefail && export JAVA_INSTALL_VERSION=$(sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-tem" | head -1);
+    sdk install java $JAVA_INSTALL_VERSION >/dev/null 2>&1  || true;
     ln -sf ~/.sdkman/candidates/java/$JAVA_INSTALL_VERSION ~/.sdkman/candidates/java/$JAVA_VERSION;
   register: java8_installation
   changed_when: java8_installation.stdout | trim != "present"
@@ -93,7 +94,8 @@
 - name: Use generic Java 11 Major version
   ansible.builtin.shell: >
     JAVA_VERSION=11;
-    set -o pipefail && [[ $( source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk current java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*") == "${JAVA_VERSION}."* ]] && echo "present" && exit 0;
+    set -o pipefail && [[ $( source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk current java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*") == "${JAVA_VERSION}."* ]] && \
+    echo "present" && exit 0;
     source "$HOME/.sdkman/bin/sdkman-init.sh";
     sdk default java 11.0
   register: set_default_java
