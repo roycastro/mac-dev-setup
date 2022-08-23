@@ -22,6 +22,7 @@
     state: "{{ item.state | default('present') }}"
     version: "{{ item.version | default(omit) }}"
     executable: "{{ item.executable | default(omit) }}"
+    extra_args: "{{ item.extra_args | default('--user --upgrade') }}"
   loop: "{{ pip_packages }}"
 
 - name: Install global Ruby gems.

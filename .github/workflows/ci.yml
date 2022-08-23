@@ -1,6 +1,6 @@
 ---
 name: CI
-'on':
+"on":
   pull_request:
   push:
     branches:
@@ -9,7 +9,6 @@ name: CI
     - cron: "0 5 * * 4"
 
 jobs:
-
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -22,7 +21,7 @@ jobs:
       - name: Set up Python 3.
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install test dependencies.
         run: pip3 install ansible yamllint ansible-lint
@@ -53,7 +52,7 @@ jobs:
           sudo rm -rf /Applications/Google\ Chrome.app
 
       - name: Install test dependencies.
-        run: sudo pip3 install ansible
+        run: sudo pip3 install ansible && sudo pip3 uninstall -y ansible-lint && sudo pip3 uninstall yamllint
 
       - name: Set up the test environment.
         run: |
@@ -68,7 +67,7 @@ jobs:
       - name: Test the playbook.
         run: ansible-playbook main.yml --tags "homebrew,dotfiles,dock,sudoers,osx,extra-packages,post"
         env:
-          ANSIBLE_FORCE_COLOR: '1'
+          ANSIBLE_FORCE_COLOR: "1"
 
       - name: Idempotence check.
         run: |
@@ -76,4 +75,4 @@ jobs:
           ansible-playbook main.yml | tee -a ${idempotence}
           tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
         env:
-          ANSIBLE_FORCE_COLOR: '1'
+          ANSIBLE_FORCE_COLOR: "1"
