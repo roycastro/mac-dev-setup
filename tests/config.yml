@@ -138,7 +138,6 @@ homebrew_cask_apps:
   - royal-tsx
   - slack
   - telegram
-  - tor-browser
   - tunnelblick
   - viscosity
   - visual-paradigm
