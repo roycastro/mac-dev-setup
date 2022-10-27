@@ -96,6 +96,8 @@ homebrew_installed_packages:
   - pre-commit
   - rlwrap
   - romkatv/powerlevel10k/powerlevel10k
+  - tree
+  - fzf
 
 homebrew_taps:
   - homebrew/core
@@ -148,6 +150,7 @@ homebrew_cask_apps:
   - ubersicht
   - flameshot
   - tailscale
+  - hpedrorodrigues/tools/dockutil
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps:
   - { id: 1147396723, name: "WhatsApp Desktop" }
