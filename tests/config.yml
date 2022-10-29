@@ -79,9 +79,7 @@ homebrew_installed_packages:
   - mtr
   - pyenv
   - yabai
-  - skhd
   - m-cli
-  - archey
   - tmux
   - httpstat
   - pre-commit
