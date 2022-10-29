@@ -90,7 +90,6 @@ homebrew_installed_packages:
   - yabai
   - skhd
   - m-cli
-  - archey
   - tmux
   - httpstat
   - pre-commit
