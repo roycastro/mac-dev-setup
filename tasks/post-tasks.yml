@@ -5,10 +5,12 @@
   tags:
     - "post"
 - name: Get current Wallpaper
-  ansible.builtin.shell: |
+  vars:
+    script: 'tell app "finder" to get posix path of (get desktop picture as alias)'
+  ansible.builtin.shell: |-
     set -e -o pipefail && \
-    osascript -e 'tell app "finder" to get posix path of (get desktop picture as alias)' |
-    grep {{ background_image_path }} |
+    osascript -e '{{ script }}' | \
+    grep {{ background_image_path }} | \
     wc -l
   register: current_wallpaper
   changed_when: current_wallpaper.stdout | trim != "1"
@@ -66,40 +68,40 @@
     version: master
   tags:
     - "post"
-- name: Install latest Java 11 and create generic Major version folder
-  ansible.builtin.shell: >
+- name: Install Java SDKs and create generic Major version folder
+  vars:
+    JAVA_VERSIONS:
+      - "11"
+      - "8"
+  args:
+    executable: /bin/bash
+  loop: "{{ JAVA_VERSIONS }}"
+  ansible.builtin.shell: |
     set -e -o pipefail;
-    export JAVA_VERSION=11.0;
+    JAVA_VERSION="{{ item }}"
     [[ -d ~/.sdkman/candidates/java/$JAVA_VERSION ]] && echo "present" && exit 0;
+    JAVA_INSTALL_VERSION=$(bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-tem" | head -1");
+    [[ -z "$JAVA_INSTALL_VERSION" ]] && \
+     JAVA_INSTALL_VERSION=$(bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-amzn" | head -1");
     source "$HOME/.sdkman/bin/sdkman-init.sh";
-    export JAVA_INSTALL_VERSION=$(sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-tem" | head -1);
-    sdk install java $JAVA_INSTALL_VERSION >/dev/null 2>&1 || true;
-    ln -sf ~/.sdkman/candidates/java/$JAVA_INSTALL_VERSION ~/.sdkman/candidates/java/$JAVA_VERSION;
+    sdk install java "${JAVA_INSTALL_VERSION}" >/dev/null 2>&1 || true;
+    ln -sf "${HOME}/.sdkman/candidates/java/${JAVA_INSTALL_VERSION}" "${HOME}/.sdkman/candidates/java/${JAVA_VERSION}";
   register: java11_installation
   changed_when: java11_installation.stdout | trim != "present"
   tags:
     - "post"
-- name: Install latest Java 8 and create generic Major version folder
-  ansible.builtin.shell: >
-    set -e -o pipefail;
-    export JAVA_VERSION=8.0;
-    [[ -d ~/.sdkman/candidates/java/$JAVA_VERSION ]] && echo "present" && exit 0;
-    source "$HOME/.sdkman/bin/sdkman-init.sh";
-    export JAVA_INSTALL_VERSION=$(sdk list java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*-tem" | head -1);
-    sdk install java $JAVA_INSTALL_VERSION >/dev/null 2>&1  || true;
-    ln -sf ~/.sdkman/candidates/java/$JAVA_INSTALL_VERSION ~/.sdkman/candidates/java/$JAVA_VERSION;
-  register: java8_installation
-  changed_when: java8_installation.stdout | trim != "present"
-  tags:
-    - "post"
 - name: Use generic Java 11 Major version
-  ansible.builtin.shell: >
+  ansible.builtin.shell: |
     JAVA_VERSION=11;
     set -e -o pipefail;
-    [[ $( source "$HOME/.sdkman/bin/sdkman-init.sh" && set -e -o pipefail && sdk current java | grep -o "${JAVA_VERSION}\\.[0-9\\.]*") == "${JAVA_VERSION}."* ]] && \
-    echo "present" && exit 0;
+    current_version=$(basename $(readlink "${HOME}/.sdkman/candidates/java/current"));
+    generic_version=$(basename $(readlink "${HOME}/.sdkman/candidates/java/${JAVA_VERSION}"));
+    if [[ "${current_version}" =~ "${JAVA_VERSION}" ]]; then
+      echo "present";
+      exit 0;
+    fi;
     source "$HOME/.sdkman/bin/sdkman-init.sh";
-    sdk default java 11.0
+    sdk default java $JAVA_VERSION >/dev/null 2>&1 || true;
   register: set_default_java
   changed_when: set_default_java.stdout | trim != "present"
   tags:
