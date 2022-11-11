@@ -31,7 +31,7 @@
 - name: Clone repository with app-bar
   ansible.builtin.git:
     repo: https://github.com/Jean-Tinland/simple-bar.git
-    dest: ~/Library/Application\ Support/Übersicht/widgets/simple-bar
+    dest: "~/Library/Application Support/Übersicht/widgets/simple-bar"
     clone: true
     update: true
     version: master
