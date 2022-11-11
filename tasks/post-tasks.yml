@@ -37,6 +37,14 @@
     version: master
   tags:
     - "post"
+- name: Create a link from yabai's usual place in Homebrew folder to /usr/local/bin/yabai as sudo
+  ansible.builtin.file:
+    src: /opt/homebrew/bin/yabai
+    dest: /usr/local/bin/yabai
+    state: link
+  become: true
+  tags:
+    - "post"
 - name: Clone repository with fonts that will be used by default ZSH theme
   ansible.builtin.git:
     repo: https://github.com/powerline/fonts.git
