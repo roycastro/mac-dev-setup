@@ -97,6 +97,7 @@ homebrew_installed_packages:
   - romkatv/powerlevel10k/powerlevel10k
   - tree
   - fzf
+  - bat
 
 homebrew_taps:
   - homebrew/core
@@ -114,7 +115,6 @@ homebrew_cask_apps:
   - dash
   - dbeaver-community
   - docker
-  - dropbox
   - firefox
   - flutter
   - font-fira-code
@@ -137,7 +137,6 @@ homebrew_cask_apps:
   - royal-tsx
   - slack
   - telegram
-  - tor-browser
   - tunnelblick
   - viscosity
   - visual-paradigm
