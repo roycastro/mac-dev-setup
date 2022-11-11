@@ -5,7 +5,7 @@
 This playbook installs and configures most of the software I use on my Mac for web development. Please take into account that some features are not complete an consequently this is a WIP. This work is heavily based on [geerlinguy](https://github.com/geerlingguy)'s awesome tutorials and I recommend you visit this [repository](https://github.com/geerlingguy/mac-dev-playbook)
 
 ```text
- Note: All the testing has been carried out in [macOS Big Sur](https://www.apple.com/macos/big-sur/)
+ Note: All the testing has been carried out in [macOS Ventura](https://www.apple.com/macos/ventura/)
 ```
 
 ## Installation
@@ -13,9 +13,23 @@ This playbook installs and configures most of the software I use on my Mac for w
 1. Ensure Apple's command line tools are installed (`xcode-select --install` to launch the installer).
 2. [Install Oh My Zsh](https://ohmyz.sh/)
 3. [Install Ansible](http://docs.ansible.com/intro_installation.html).
-4. Clone this repository to your local drive.
-5. Run `$ ansible-galaxy install -r requirements.yml` inside this directory to install required Ansible roles.
-6. Run `ansible-playbook main.yml -i inventory --ask-become-pass` inside this directory. Enter your account password when prompted.
+4. Install SDKMan utility as it will be needed to install multiple Java versions simultaneously. [SDKMan](https://sdkman.io/install)
+
+```bash
+curl -s "https://get.sdkman.io" | zsh
+```
+
+5. Clone this repository to your local drive.
+6. Go to the repository and run the following commands to use Ansible in a Python virtual environment:
+
+   ```bash
+     python -m virtualenv ansible
+     source ansible/bin/activate
+     pip install ansible
+   ```
+
+7. Run `ansible-galaxy install -r requirements.yml` inside this directory to install required Ansible roles.
+8. Run `ansible-playbook main.yml -i inventory --ask-become-pass` inside this directory. Enter your account password when prompted. IMPORTANT: This playbook will install and configure a lot of software, so it may take a while to run.
 
 ```text
  Note: If some Homebrew commands fail, you might need to agree to Xcode's license or fix some other Brew issue. Run `brew doctor` to see if this is the case.
@@ -88,7 +102,13 @@ Any variable can be overridden in `config.yml`; see the supporting roles' docume
 
 Also as part of the playbook my [dotfiles](https://github.com/roycastro/mac-dev-dotfiles) are also installed into the current user's home directory, including the `.osx` dotfile for configuring many aspects of macOS for better performance and ease of use ( hopefully ). You can disable dotfiles management by setting `configure_dotfiles: no` in your configuration.
 
-### Configuration to be added
+### Configurations needed after the execution of the playbook
+
+- After installing fzf using the playbook you have to enable autocompletion and key bindings as it's assumed you will use it in the .zshrc config. You can execute the following commands to do so (TODO: automate this process):
+
+```bash
+          $(brew --prefix)/opt/fzf/install
+```
 
 - There is a vim configuration in the repo, but it's still pending the actual installation:
 
@@ -99,8 +119,6 @@ Also as part of the playbook my [dotfiles](https://github.com/roycastro/mac-dev-
         curl https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim > pathogen.vim
         cd ~/.vim/bundle
         git clone git://github.com/scrooloose/nerdtree.git
-        curl -s "https://get.sdkman.io" | zsh
-        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" // In case of error add this ZSH_DISABLE_COMPFIX="true"
 ```
 
 ## Fixes needed or commom errors
@@ -120,8 +138,3 @@ Also as part of the playbook my [dotfiles](https://github.com/roycastro/mac-dev-
 - Follow tutorial: [Install NativeScript](https://docs.nativescript.org/start/ns-setup-os-x)
 - Follow tutorial: [Install NX](https://nx.dev/latest/angular/getting-started/cli-overview#installing-the-cli)
 - Follow the instructions at [this](https://formulae.brew.sh/cask/google-cloud-sdk) in order to get gcloud available on the terminal
-- After successfully installing fzf perhaps you will want to enable autocompletion and key bindings. You can execute the following commands to do so:
-
-```bash
-          $(brew --prefix)/opt/fzf/install
-```
