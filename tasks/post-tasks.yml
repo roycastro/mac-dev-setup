@@ -28,13 +28,10 @@
     mode: go-w
   tags:
     - "post"
-- name: Clone repository with app-bar
-  ansible.builtin.git:
-    repo: https://github.com/Jean-Tinland/simple-bar.git
-    dest: "~/Library/Application Support/Übersicht/widgets/simple-bar"
-    clone: true
-    update: true
-    version: master
+- name: Set as executable spacebar's config file
+  ansible.builtin.file:
+    path: ~/.dotfiles/configs/.spacebarrc
+    mode: u+x
   tags:
     - "post"
 - name: Create a link from yabai's usual place in Homebrew folder to /usr/local/bin/yabai as sudo
