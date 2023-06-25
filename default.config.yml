@@ -47,9 +47,9 @@ dotfiles_files:
   - .zshrc
   - .yabairc
   - .skhdrc
-  - .simplebarrc
   - .tmux.conf
   - .p10k.zsh
+  - .spacebarrc
 
 homebrew_installed_packages:
   # - ansible # Installed via Pip.
@@ -98,6 +98,7 @@ homebrew_installed_packages:
   - tree
   - fzf
   - bat
+  - spacebar
 
 homebrew_taps:
   - homebrew/core
@@ -145,10 +146,10 @@ homebrew_cask_apps:
   - yandex-cloud-cli
   - zoom
   - parallels
-  - ubersicht
   - flameshot
   - tailscale
   - hpedrorodrigues/tools/dockutil
+  - font-fontawesome
 # See `geerlingguy.mas` role documentation for usage instructions.
 mas_installed_apps:
   - { id: 1147396723, name: "WhatsApp Desktop" }
