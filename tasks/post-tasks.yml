@@ -1,24 +1,20 @@
 ---
 - name: "Set default value for dotfiles_repo_local_destination"
   ansible.builtin.set_fact:
-    background_image_path: "~/.dotfiles/configs/backgroundImage.jpeg"
+    background_image_path: "{{ lookup('env', 'HOME') }}/.dotfiles/configs/backgroundImage.jpeg"
   tags:
     - "post"
 - name: Get current Wallpaper
-  vars:
-    script: 'tell app "finder" to get posix path of (get desktop picture as alias)'
   ansible.builtin.shell: |-
-    set -e -o pipefail && \
-    osascript -e '{{ script }}' | \
-    grep {{ background_image_path }} | \
-    wc -l
+    wallpaper get | \
+    grep -vc '{{ background_image_path }}' || true
   register: current_wallpaper
-  changed_when: current_wallpaper.stdout | trim != "1"
+  changed_when: current_wallpaper.stdout | trim != "0"
   tags:
     - "post"
 - name: Set Desktop Background Image
-  ansible.builtin.command: m wallpaper "{{ background_image_path }}"
-  when: current_wallpaper.stdout == "0"
+  ansible.builtin.command: wallpaper set "{{ background_image_path }}"  --screen all --scale fill
+  when: current_wallpaper.stdout != "0"
   tags:
     - "post"
 - name: Executed to avoid issues with zsh compinit insecure directories warnings when attempting to load ZSH completions

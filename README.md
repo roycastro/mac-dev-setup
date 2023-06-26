@@ -15,9 +15,9 @@ This playbook installs and configures most of the software I use on my Mac for w
 3. [Install Ansible](http://docs.ansible.com/intro_installation.html).
 4. Install SDKMan utility as it will be needed to install multiple Java versions simultaneously. [SDKMan](https://sdkman.io/install)
 
-```bash
-curl -s "https://get.sdkman.io" | zsh
-```
+   ```bash
+   curl -s "https://get.sdkman.io" | zsh
+   ```
 
 5. Clone this repository to your local drive.
 6. Go to the repository and run the following commands to use Ansible in a Python virtual environment:
@@ -29,11 +29,16 @@ curl -s "https://get.sdkman.io" | zsh
    ```
 
 7. Run `ansible-galaxy install -r requirements.yml` inside this directory to install required Ansible roles.
+
+   ```text
+   Note: One of the steps sets a predefined Wallpaper. Due to OS level restrictions my recommendation is to have only one virtual Desktop per Screen while executing the ansible playbook. If not, the wallpaper will be set only for the visible Desktops when the step 8 is executed.
+   ```
+
 8. Run `ansible-playbook main.yml -i inventory --ask-become-pass` inside this directory. Enter your account password when prompted. IMPORTANT: This playbook will install and configure a lot of software, so it may take a while to run.
 
-```text
- Note: If some Homebrew commands fail, you might need to agree to Xcode's license or fix some other Brew issue. Run `brew doctor` to see if this is the case.
-```
+   ```text
+   Note: If some Homebrew commands fail, you might need to agree to Xcode's license or fix some other Brew issue. Run `brew doctor` to see if this is the case.
+   ```
 
 ### Use with a remote Mac
 
